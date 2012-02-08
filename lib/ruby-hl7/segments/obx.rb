@@ -1,13 +1,11 @@
-# encoding: UTF-8
-require 'ruby-hl7'
 class HL7::Message::Segment::OBX < HL7::Message::Segment
   weight 90
   has_children [:NTE]
-  add_field :set_id
-  add_field :value_type
-  add_field :observation_id
-  add_field :observation_sub_id
-  add_field :observation_value
+  add_field :set_id, :idx => 1
+  add_field :value_type, :idx => 2
+  add_field :observation_id, :idx => 3
+  add_field :observation_sub_id, :idx => 4
+  add_field :observation_value, :idx => 5
   add_field :units
   add_field :references_range
   add_field :abnormal_flags

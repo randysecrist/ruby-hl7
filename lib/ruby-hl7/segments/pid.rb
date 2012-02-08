@@ -1,14 +1,12 @@
-# encoding: UTF-8
-require 'ruby-hl7'
 class HL7::Message::Segment::PID < HL7::Message::Segment
   weight 1
   add_field :set_id
-  add_field :patient_id
+  add_field :patient_id, :idx => 3
   add_field :patient_id_list
   add_field :alt_patient_id
-  add_field :patient_name
+  add_field :patient_name, :idx => 5
   add_field :mother_maiden_name
-  add_field :patient_dob
+  add_field :patient_dob, :idx => 7
   add_field :admin_sex do |sex|
     unless /^[FMOUAN]$/.match(sex) || sex == nil || sex == ""
       raise HL7::InvalidDataError.new( "bad administrative sex value (not F|M|O|U|A|N)" )

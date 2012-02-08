@@ -1,12 +1,10 @@
-# encoding: UTF-8
-require 'ruby-hl7'
 class HL7::Message::Segment::OBR < HL7::Message::Segment
   weight 89 # obr.weight-1
   has_children [:OBX]
-  add_field :set_id
-  add_field :placer_order_number
-  add_field :filler_order_number
-  add_field :universal_service_id
+  add_field :set_id, :idx => 1
+  add_field :placer_order_number, :idx => 2
+  add_field :filler_order_number, :idx => 3
+  add_field :universal_service_id, :idx => 4
   add_field :priority
   add_field :requested_date
   add_field :observation_date

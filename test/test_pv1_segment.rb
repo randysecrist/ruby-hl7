@@ -1,28 +1,20 @@
-# encoding: UTF-8
-$: << '../lib'
 require 'test/unit'
 require 'ruby-hl7'
 
-class PidSegment < Test::Unit::TestCase
+class Pv1Segment < Test::Unit::TestCase
   def setup
-    @base = "PID|||333||LastName^FirstName^MiddleInitial^SR^NickName||19760228|F||||||||||555. 55|012345678"
+    @base = "PV1||I|3ST^P001^A|3|||1234567890^LastName^FirstName^^^^MD|9876543210^LastName^FirstName^M^^^MD||RAD||||6||""|2345678901^LastName^FirstName^^^^MD|RT|1112100001|SP|||||||||||||||||||A|||||02/06/2012||||||ADM"
   end
 
-  def test_admin_sex_limits
-    pid = HL7::Message::Segment::PID.new
+  def test_create_pv1
     assert_nothing_raised do
-      vals = %w[F M O U A N] + [ nil ]
-      vals.each do |x|
-        pid.admin_sex = x
-      end
-      pid.admin_sex = ""
+      pv1 = HL7::Message::Segment::PV1.new @base
+      assert_not_nil pv1
+      assert_equal @base, pv1.to_s
+      assert_equal '3ST^P001^A', pv1.assigned_location
+      assert_equal '1234567890^LastName^FirstName^^^^MD', pv1.admitting_doctor
+      assert_equal '9876543210^LastName^FirstName^M^^^MD', pv1.referring_doctor
+      assert_equal '02/06/2012', pv1.admit_date
     end
-
-    assert_raises( HL7::InvalidDataError ) do
-      ["TEST", "A", 1, 2].each do |x|
-        pid.admin_sex = x
-      end
-    end
-        
   end
 end
