@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    ruby-hl7 (0.4)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rake (0.9.2.2)
+    rantly (0.3.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rake
+  rantly
+  ruby-hl7!
