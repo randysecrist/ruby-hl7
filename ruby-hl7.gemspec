@@ -6,6 +6,7 @@ Gem::Specification.new do |s|
   s.version = HL7::VERSION
   s.authors = ["Mark Guzman", "Randy Secrist"]
   s.date = %q{2012-02-08}
+  s.summary = %q{A simple library to parse and generate HL7 2.x messages}
   s.description = %q{A simple library to parse and generate HL7 2.x messages}
   s.email = %q{randy.secrist@gmail.com}
 
