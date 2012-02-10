@@ -500,7 +500,7 @@ class HL7::Message::Segment
   # * blk is an optional validation proc which MUST take a parameter
   #   and always return a value for the field (it will be used on read/write
   #   calls)
-  def self.add_field( name, options={}, &blk ) 
+  def self.add_field( name, options={}, &blk )
     options = { :idx =>-1, :blk =>blk}.merge!( options )
     name ||= :id
     namesym = name.to_sym
@@ -538,30 +538,42 @@ class HL7::Message::Segment
   end
 
   def field_info( name ) #:nodoc:
-    field_blk = nil
     idx = name # assume we've gotten a fixnum
+    sub_idx = nil
+    field_blk = nil
     unless name.kind_of?( Fixnum )
       fld_info = self.class.fields[ name ]
       idx = fld_info[:idx].to_i
+      if fld_info[:subidx]
+        sub_idx = fld_info[:subidx].to_i
+      end
       field_blk = fld_info[:blk]
     end
-
-    [ idx, field_blk ]
+    [ idx, sub_idx, field_blk ]
   end
 
   def read_field( name ) #:nodoc:
-    idx, field_blk = field_info( name )
+    idx, sub_idx, field_blk = field_info( name )
     return nil unless idx
     return nil if (idx >= @elements.length) 
 
     ret = @elements[ idx ]
     ret = ret.first if (ret.kind_of?(Array) && ret.length == 1)
     ret = field_blk.call( ret ) if field_blk
+
+    # apply subindex (^) field split
+    if sub_idx and sub_idx.kind_of? Fixnum
+      parts = ret.split('^')
+      if sub_idx < parts.length and sub_idx >= 0
+        ret = ret.split(@item_delim)[sub_idx]
+      end
+    end
+
     ret
   end
 
   def write_field( name, value ) #:nodoc:
-    idx, field_blk = field_info( name )
+    idx, sub_idx, field_blk = field_info( name )
     return nil unless idx
 
     if (idx >= @elements.length)

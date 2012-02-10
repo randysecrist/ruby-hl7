@@ -15,6 +15,8 @@ class PidSegment < Test::Unit::TestCase
       assert_equal @base, pid.to_s
       assert_equal '333', pid.patient_id
       assert_equal 'LastName^FirstName^MiddleInitial^SR^NickName', pid.patient_name
+      assert_equal 'LastName', pid.patient_familyname
+      assert_equal 'FirstName', pid.patient_givenname
       assert_equal '19760228', pid.patient_dob
     end    
   end

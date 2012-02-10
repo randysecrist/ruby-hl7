@@ -12,8 +12,26 @@ class Pv1Segment < Test::Unit::TestCase
       assert_not_nil pv1
       assert_equal @base, pv1.to_s
       assert_equal '3ST^P001^A', pv1.assigned_location
+      assert_equal '3ST', pv1.assigned_location_dept
+      assert_equal 'P001', pv1.assigned_location_room
+      assert_equal 'A', pv1.assigned_location_loc
+
+
       assert_equal '1234567890^LastName^FirstName^^^^MD', pv1.admitting_doctor
+      assert_equal '1234567890', pv1.admitting_doctor_npi
+      assert_equal 'LastName', pv1.admitting_doctor_familyname
+      assert_equal 'FirstName', pv1.admitting_doctor_givenname
+      assert_equal '', pv1.admitting_doctor_middlename
+      assert_equal 'MD', pv1.admitting_doctor_title
+
       assert_equal '9876543210^LastName^FirstName^M^^^MD', pv1.referring_doctor
+      assert_equal '9876543210', pv1.referring_doctor_npi
+      assert_equal 'LastName', pv1.referring_doctor_familyname
+      assert_equal 'FirstName', pv1.referring_doctor_givenname
+      assert_equal 'M', pv1.referring_doctor_middlename
+      assert_equal 'MD', pv1.referring_doctor_title
+
+
       assert_equal '02/06/2012', pv1.admit_date
     end
   end

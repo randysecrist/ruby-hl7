@@ -18,7 +18,8 @@ class MshSegment < Test::Unit::TestCase
     assert_nothing_raised do
       msh = HL7::Message::Segment::MSH.new @base_msh
       assert_equal '56364182', msh.message_control_id
-      assert_equal 'ADT^A01', msh.message_type
+      assert_equal 'ADT', msh.message_class
+      assert_equal 'A01', msh.message_type
     end
   end
 

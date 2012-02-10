@@ -3,11 +3,19 @@ class HL7::Message::Segment::PV1 < HL7::Message::Segment
   add_field :set_id
   add_field :patient_class
   add_field :assigned_location, :idx => 3
+  add_field :assigned_location_dept, :idx => 3, :subidx => 0
+  add_field :assigned_location_room, :idx => 3, :subidx => 1
+  add_field :assigned_location_loc, :idx => 3, :subidx => 2
   add_field :admission_type
   add_field :preadmit_number
   add_field :prior_location
   add_field :attending_doctor
   add_field :referring_doctor, :idx => 8
+  add_field :referring_doctor_npi, :idx => 8, :subidx => 0
+  add_field :referring_doctor_familyname, :idx => 8, :subidx => 1
+  add_field :referring_doctor_givenname, :idx => 8, :subidx => 2
+  add_field :referring_doctor_middlename, :idx => 8, :subidx => 3
+  add_field :referring_doctor_title, :idx => 8, :subidx => 6
   add_field :consulting_doctor
   add_field :hospital_service
   add_field :temporary_location
@@ -17,6 +25,11 @@ class HL7::Message::Segment::PV1 < HL7::Message::Segment
   add_field :ambulatory_status
   add_field :vip_indicator
   add_field :admitting_doctor, :idx => 7
+  add_field :admitting_doctor_npi, :idx => 7, :subidx => 0
+  add_field :admitting_doctor_familyname, :idx => 7, :subidx => 1
+  add_field :admitting_doctor_givenname, :idx => 7, :subidx => 2
+  add_field :admitting_doctor_middlename, :idx => 7, :subidx => 3
+  add_field :admitting_doctor_title, :idx => 7, :subidx => 6
   add_field :patient_type
   add_field :visit_number
   add_field :financial_class
