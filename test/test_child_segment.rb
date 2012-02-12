@@ -9,7 +9,7 @@ class ChildSegment < Test::Unit::TestCase
   end
 
   def test_access_children
-    msg = HL7::Message.new @base
+    msg = Ruby::HL7::Message.new @base
     assert_not_nil msg
     assert_not_nil msg[:OBR]
     assert_equal( 3, msg[:OBR].length ) 
@@ -22,10 +22,10 @@ class ChildSegment < Test::Unit::TestCase
   end
 
   def test_add_children
-    msg = HL7::Message.new @base
+    msg = Ruby::HL7::Message.new @base
     assert_not_nil msg
     assert_not_nil msg[:OBR]
-    ob = HL7::Message::Segment::OBR.new
+    ob = Ruby::HL7::OBR.new
     assert_not_nil ob
     
     msg << ob
@@ -35,7 +35,7 @@ class ChildSegment < Test::Unit::TestCase
     orig_cnt = msg.length
     
     (1..4).each do |x|
-      m = HL7::Message::Segment::OBX.new
+      m = Ruby::HL7::OBX.new
       m.observation_value = "taco"
       assert_not_nil m
       assert_not_nil /taco/.match( m.to_s )

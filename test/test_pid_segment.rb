@@ -10,7 +10,7 @@ class PidSegment < Test::Unit::TestCase
 
   def test_create_pid
     assert_nothing_raised do
-      pid = HL7::Message::Segment::PID.new @base
+      pid = Ruby::HL7::PID.new @base
       assert_not_nil pid
       assert_equal @base, pid.to_s
       assert_equal '333', pid.patient_id
@@ -22,7 +22,7 @@ class PidSegment < Test::Unit::TestCase
   end
 
   def test_admin_sex_limits
-    pid = HL7::Message::Segment::PID.new
+    pid = Ruby::HL7::PID.new
     assert_nothing_raised do
       vals = %w[F M O U A N] + [ nil ]
       vals.each do |x|
@@ -31,7 +31,7 @@ class PidSegment < Test::Unit::TestCase
       pid.admin_sex = ""
     end
 
-    assert_raises( HL7::InvalidDataError ) do
+    assert_raises( Ruby::HL7::InvalidDataError ) do
       ["TEST", "A", 1, 2].each do |x|
         pid.admin_sex = x
       end

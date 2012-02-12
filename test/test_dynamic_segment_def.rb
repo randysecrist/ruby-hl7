@@ -8,7 +8,7 @@ class DynamicSegmentDefinition < Test::Unit::TestCase
   end
 
   def test_block_definition
-    seg = HL7::Message::Segment.new do |s|
+    seg = Ruby::HL7::Segment.new do |s|
       s.e0 = "MSK"
       s.e1 = "1234"
       s.e2 = "5678"
@@ -18,7 +18,7 @@ class DynamicSegmentDefinition < Test::Unit::TestCase
   end
 
   def test_ruby_block_initializer 
-    seg = HL7::Message::Segment.new do
+    seg = Ruby::HL7::Segment.new do
       e0 "MSK"
       e1 "1234"
       e2 "5678"
@@ -28,7 +28,7 @@ class DynamicSegmentDefinition < Test::Unit::TestCase
   end
 
   def test_shouldnt_pollute_caller_namespace
-    seg = HL7::Message::Segment.new do |s|
+    seg = Ruby::HL7::Segment.new do |s|
       s.e0 = "MSK"
       s.e1 = "1234"
       s.e2 = "5678"

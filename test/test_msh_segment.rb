@@ -8,7 +8,7 @@ class MshSegment < Test::Unit::TestCase
 
   def test_create_msh
     assert_nothing_raised do
-      msh = HL7::Message::Segment::MSH.new @base_msh
+      msh = Ruby::HL7::MSH.new @base_msh
       assert_not_nil msh
       assert_equal @base_msh, msh.to_s
     end
@@ -16,7 +16,7 @@ class MshSegment < Test::Unit::TestCase
 
   def test_access_msh
     assert_nothing_raised do
-      msh = HL7::Message::Segment::MSH.new @base_msh
+      msh = Ruby::HL7::MSH.new @base_msh
       assert_equal '56364182', msh.message_control_id
       assert_equal 'ADT', msh.message_class
       assert_equal 'A01', msh.message_type

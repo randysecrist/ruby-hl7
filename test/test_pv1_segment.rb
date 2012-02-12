@@ -8,7 +8,7 @@ class Pv1Segment < Test::Unit::TestCase
 
   def test_create_pv1
     assert_nothing_raised do
-      pv1 = HL7::Message::Segment::PV1.new @base
+      pv1 = Ruby::HL7::PV1.new @base
       assert_not_nil pv1
       assert_equal @base, pv1.to_s
       assert_equal '3ST^P001^A', pv1.assigned_location

@@ -3,7 +3,7 @@ require "ruby-hl7/version"
 
 Gem::Specification.new do |s|
   s.name = 'ruby-hl7'
-  s.version = HL7::VERSION
+  s.version = Ruby::HL7::VERSION
   s.authors = ["Mark Guzman", "Randy Secrist"]
   s.date = %q{2012-02-08}
   s.summary = %q{A simple library to parse and generate HL7 2.x messages}

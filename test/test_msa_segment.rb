@@ -10,7 +10,7 @@ class MsaSegment < Test::Unit::TestCase
 
   def test_create_msa
     assert_nothing_raised do
-      msa = HL7::Message::Segment::MSA.new( @base_msa )
+      msa = Ruby::HL7::MSA.new( @base_msa )
       assert_not_nil( msa )
       assert_equal( @base_msa, msa.to_s )
     end
@@ -18,7 +18,7 @@ class MsaSegment < Test::Unit::TestCase
 
   def test_access_msa
     assert_nothing_raised do
-      msa = HL7::Message::Segment::MSA.new( @base_msa )
+      msa = Ruby::HL7::MSA.new( @base_msa )
       assert_equal( "AR", msa.ack_code )
       assert_equal( "ZZ9380 ERR", msa.control_id )
     end

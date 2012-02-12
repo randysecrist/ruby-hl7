@@ -1,2 +1,8 @@
-class HL7::Message::Segment::ORU < HL7::Message::Segment
+module Ruby
+  module HL7
+
+    class ORU < Segment
+    end
+
+  end
 end
