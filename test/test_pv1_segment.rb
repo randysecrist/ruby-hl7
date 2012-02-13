@@ -12,9 +12,9 @@ class Pv1Segment < Test::Unit::TestCase
       assert_not_nil pv1
       assert_equal @base, pv1.to_s
       assert_equal '3ST^P001^A', pv1.assigned_location
-      assert_equal '3ST', pv1.assigned_location_dept
+      assert_equal '3ST', pv1.assigned_location_unit
       assert_equal 'P001', pv1.assigned_location_room
-      assert_equal 'A', pv1.assigned_location_loc
+      assert_equal 'A', pv1.assigned_location_bed
 
 
       assert_equal '1234567890^LastName^FirstName^^^^MD', pv1.admitting_doctor

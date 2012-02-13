@@ -6,9 +6,10 @@ module Ruby
       add_field :set_id
       add_field :patient_class
       add_field :assigned_location, :idx => 3
-      add_field :assigned_location_dept, :idx => 3, :subidx => 0
+      add_field :assigned_location_unit, :idx => 3, :subidx => 0
       add_field :assigned_location_room, :idx => 3, :subidx => 1
-      add_field :assigned_location_loc, :idx => 3, :subidx => 2
+      add_field :assigned_location_bed, :idx => 3, :subidx => 2
+      add_field :assigned_location_facility, :idx => 3, :subidx => 3
       add_field :admission_type
       add_field :preadmit_number
       add_field :prior_location
