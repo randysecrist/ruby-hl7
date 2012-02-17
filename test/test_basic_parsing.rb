@@ -8,6 +8,7 @@ class BasicParsing < Test::Unit::TestCase
     @empty_segments_txt = open( './test_data/empty_segments.hl7' ).readlines.first
     @simple_msh_carriage_returns = open( './test_data/carriage_returns.hl7' ).readlines.first
     @simple_msh_end_lines = File.read('./test_data/end_lines.hl7')
+    @empty_at_end = File.read('./test_data/empty_at_end.hl7')
     @base_msh = "MSH|^~\\&|LAB1||DESTINATION||19910127105114||ORU^R03|LAB1003929"
     @base_msh_alt_delims = "MSH$@~\\&|LAB1||DESTINATION||19910127105114||ORU^R03|LAB1003929"
   end
@@ -16,6 +17,15 @@ class BasicParsing < Test::Unit::TestCase
     msg = Ruby::HL7::Message.new
     msg.parse @simple_msh_carriage_returns
     assert_equal( @simple_msh_carriage_returns, msg.to_hl7 )
+  end
+
+  def test_empty_at_end
+    msg = Ruby::HL7::Message.new
+    msg.parse @empty_at_end
+    # end characters are not preserved in this case
+    # see core.rb:243
+    assert_equal( @empty_at_end, msg.to_hl7 + "\r")
+    assert_equal 'A01', msg[:MSH].message_type
   end
   
   def test_parse_delims

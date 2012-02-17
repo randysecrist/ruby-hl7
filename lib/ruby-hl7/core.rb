@@ -240,7 +240,10 @@ module Ruby
           post_mllp = $1 #strip the mllp bytes
         end
 
-        ary = post_mllp.split( segment_delim, -1 )
+        # don't supress trailing characters
+        ary = post_mllp.split( segment_delim, -1 ).compact.reject do |seg|
+          seg.empty?
+        end
         generate_segments( ary )
       end
 
@@ -260,42 +263,42 @@ module Ruby
       end
 
       def generate_segment( elm, last_seg )
-          seg_parts = elm.split( @element_delim, -1 )
-          unless seg_parts && (seg_parts.length > 0)
-            raise Ruby::HL7::ParseError.new if HL7.ParserConfig[:empty_segment_is_error] || false
-            return nil
-          end
+        seg_parts = elm.split( @element_delim, -1 )
+        unless seg_parts && (seg_parts.length > 0)
+          raise Ruby::HL7::ParseError.new if HL7.ParserConfig[:empty_segment_is_error] || false
+          return nil
+        end
+        
+        seg_name = seg_parts[0]
+        if RUBY_VERSION < "1.9" && HL7.constants.index(seg_name) # do we have an implementation?
+          kls = eval("Ruby::HL7::%s" % seg_name)
+        elsif RUBY_VERSION >= "1.9" && HL7.constants.index(seg_name.to_sym)
+          kls = eval("Ruby::HL7::%s" % seg_name)
+        else
+          # we don't have an implementation for this segment
+          # so lets just preserve the data
+          kls = Ruby::HL7::Default
+        end
+
+        new_seg = kls.new( elm, [@element_delim, @item_delim] )
+        new_seg.segment_parent = self
+        
+        if last_seg && last_seg.respond_to?(:children) && last_seg.accepts?( seg_name )
+          last_seg.children << new_seg
+          new_seg.is_child_segment = true
+          return last_seg
+        end
           
-          seg_name = seg_parts[0]
-          if RUBY_VERSION < "1.9" && HL7.constants.index(seg_name) # do we have an implementation?
-            kls = eval("Ruby::HL7::%s" % seg_name)
-          elsif RUBY_VERSION >= "1.9" && HL7.constants.index(seg_name.to_sym)
-            kls = eval("Ruby::HL7::%s" % seg_name)
-          else
-            # we don't have an implementation for this segment
-            # so lets just preserve the data
-            kls = Ruby::HL7::Default
-          end
+        @segments << new_seg
 
-          new_seg = kls.new( elm, [@element_delim, @item_delim] )
-          new_seg.segment_parent = self
-          
-          if last_seg && last_seg.respond_to?(:children) && last_seg.accepts?( seg_name )
-            last_seg.children << new_seg
-            new_seg.is_child_segment = true
-            return last_seg
-          end
-            
-          @segments << new_seg
+        # we want to allow segment lookup by name
+        if seg_name && (seg_name.strip.length > 0)
+          seg_sym = seg_name.to_sym
+          @segments_by_name[ seg_sym ] ||= []
+          @segments_by_name[ seg_sym ] << new_seg
+        end
 
-          # we want to allow segment lookup by name
-          if seg_name && (seg_name.strip.length > 0)
-            seg_sym = seg_name.to_sym
-            @segments_by_name[ seg_sym ] ||= []
-            @segments_by_name[ seg_sym ] << new_seg
-          end
-
-          new_seg 
+        new_seg 
       end
     end                
 

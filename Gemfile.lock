@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-hl7 (0.4)
+    ruby-hl7 (0.5.1)
 
 GEM
   remote: http://rubygems.org/
