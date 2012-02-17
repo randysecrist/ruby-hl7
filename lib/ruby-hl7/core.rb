@@ -70,7 +70,9 @@ module Ruby
         if raw_msg != nil and !raw_msg.kind_of?(Array) and !raw_msg.kind_of?(File)
           org_ending = raw_msg.split(/(\r?\n|\r|\n)/).last # isolate original end
           raw_msg = raw_msg.split(/\r?\n|\r|\n/) # effectively same as readlines
-          raw_msg[raw_msg.length - 1] = raw_msg.last + org_ending # tack on original end
+          if raw_msg and org_ending
+            raw_msg[raw_msg.length - 1] = raw_msg.last + org_ending # tack on original end
+          end
         end
 
         @segments = []
