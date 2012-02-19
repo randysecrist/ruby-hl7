@@ -243,9 +243,20 @@ module Ruby
         end
 
         # don't supress trailing characters
-        ary = post_mllp.split( segment_delim, -1 ).compact.reject do |seg|
+        ary = post_mllp.split( segment_delim, -1 )
+        
+        # preserve trailing delimiters (modify in place)
+        ary.each_with_index do |item, i|
+          if item.empty? and ary[i - 1] != nil and ary[i - 1] != ary.length - 1
+            ary[i - 1] = ary[i - 1] + segment_delim
+          end
+        end
+
+        # remove empty strings caused by split
+        ary = ary.compact.reject do |seg|
           seg.empty?
         end
+
         generate_segments( ary )
       end
 

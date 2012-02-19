@@ -22,9 +22,7 @@ class BasicParsing < Test::Unit::TestCase
   def test_empty_at_end
     msg = Ruby::HL7::Message.new
     msg.parse @empty_at_end
-    # end characters are not preserved in this case
-    # see core.rb:243
-    assert_equal( @empty_at_end, msg.to_hl7 + "\r")
+    assert_equal( @empty_at_end, msg.to_hl7 )
     assert_equal 'A01', msg[:MSH].message_type
   end
   
