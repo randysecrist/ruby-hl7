@@ -11,7 +11,7 @@ class SpeedParsing < Test::Unit::TestCase
 
   def test_large_unknown_segments
     start = Time.now
-    doc = HL7::Message.new @msg
+    doc = Ruby::HL7::Message.new @msg
     assert_not_nil doc
     ends = Time.now
     assert ((ends-start) < 1)

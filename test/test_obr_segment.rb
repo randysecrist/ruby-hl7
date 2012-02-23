@@ -9,7 +9,7 @@ class ObrSegment < Test::Unit::TestCase
   end
 
   def test_read
-    obr = HL7::Message::Segment::OBR.new @base
+    obr = Ruby::HL7::OBR.new @base
     assert_equal( @base, obr.to_s )
     assert_equal( "2", obr.e1 )
     assert_equal( "2", obr.set_id )
@@ -19,7 +19,7 @@ class ObrSegment < Test::Unit::TestCase
   end
 
   def test_create
-    obr = HL7::Message::Segment::OBR.new
+    obr = Ruby::HL7::OBR.new
     obr.set_id = 1
     assert_equal( "1", obr.set_id ) 
     obr.placer_order_number = "^DMCRES"

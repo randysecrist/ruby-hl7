@@ -9,7 +9,7 @@ class ObxSegment < Test::Unit::TestCase
   end
 
   def test_initial_read
-    obx = HL7::Message::Segment::OBX.new @base
+    obx = Ruby::HL7::OBX.new @base
     assert_equal( "", obx.set_id ) 
     assert_equal( "TX", obx.value_type )
     assert_equal( "FIND^FINDINGS^L", obx.observation_id )
@@ -18,7 +18,7 @@ class ObxSegment < Test::Unit::TestCase
   end
                                           
   def test_creation
-    obx = HL7::Message::Segment::OBX.new
+    obx = Ruby::HL7::OBX.new
     obx.value_type = "TESTIES"
     obx.observation_id = "HR"
     obx.observation_sub_id = "2"
