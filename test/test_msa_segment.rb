@@ -1,27 +1,23 @@
 # encoding: UTF-8
 $: << '../lib'
-require 'test/unit'
+require 'minitest/autorun'
 require 'ruby-hl7'
 
-class MsaSegment < Test::Unit::TestCase
+class MsaSegment < MiniTest::Unit::TestCase
   def setup
     @base_msa = "MSA|AR|ZZ9380 ERR"
   end
 
   def test_create_msa
-    assert_nothing_raised do
-      msa = Ruby::HL7::MSA.new( @base_msa )
-      assert_not_nil( msa )
-      assert_equal( @base_msa, msa.to_s )
-    end
+    msa = Ruby::HL7::MSA.new( @base_msa )
+    refute_nil( msa )
+    assert_equal( @base_msa, msa.to_s )
   end
 
   def test_access_msa
-    assert_nothing_raised do
-      msa = Ruby::HL7::MSA.new( @base_msa )
-      assert_equal( "AR", msa.ack_code )
-      assert_equal( "ZZ9380 ERR", msa.control_id )
-    end
+    msa = Ruby::HL7::MSA.new( @base_msa )
+    assert_equal( "AR", msa.ack_code )
+    assert_equal( "ZZ9380 ERR", msa.control_id )
   end
 
 end

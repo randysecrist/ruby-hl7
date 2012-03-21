@@ -1,9 +1,9 @@
 # encoding: UTF-8
 $: << '../lib'
-require 'test/unit'
+require 'minitest/autorun'
 require 'ruby-hl7'
 
-class MsaSegment < Test::Unit::TestCase
+class MsaSegment < MiniTest::Unit::TestCase
   def setup
     @base_msa = "MSA|AR|ZZ9380 ERR"
   end

@@ -1,6 +1,5 @@
 # encoding: UTF-8
 require 'minitest/autorun'
-
 require 'ruby-hl7'
 
 class BasicParsing < MiniTest::Unit::TestCase

@@ -1,9 +1,9 @@
 # encoding: UTF-8
 $: << '../lib'
-require 'test/unit'
+require 'minitest/autorun'
 require 'ruby-hl7'
 
-class ObxSegment < Test::Unit::TestCase
+class ObxSegment < MiniTest::Unit::TestCase
   def setup
     @base = "OBX||TX|FIND^FINDINGS^L|1|This is a test on 05/02/94."
   end

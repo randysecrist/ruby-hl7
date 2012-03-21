@@ -1,9 +1,9 @@
 # encoding: UTF-8
 $: << '../lib'
-require 'test/unit'
+require 'minitest/autorun'
 require 'ruby-hl7'
 
-class DynamicSegmentDefinition < Test::Unit::TestCase
+class DynamicSegmentDefinition < MiniTest::Unit::TestCase
   def setup
   end
 

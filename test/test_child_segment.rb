@@ -1,54 +1,54 @@
 # encoding: UTF-8
 $: << '../lib'
-require 'test/unit'
+require 'minitest/autorun'
 require 'ruby-hl7'
 
-class ChildSegment < Test::Unit::TestCase
+class ChildSegment < MiniTest::Unit::TestCase
   def setup
     @base = open( './test_data/obxobr.hl7' ).readlines
   end
 
   def test_access_children
     msg = Ruby::HL7::Message.new @base
-    assert_not_nil msg
-    assert_not_nil msg[:OBR]
+    refute_nil msg
+    refute_nil msg[:OBR]
     assert_equal( 3, msg[:OBR].length ) 
-    assert_not_nil msg[:OBR].first.children
+    refute_nil msg[:OBR].first.children
     assert_equal( 5, msg[:OBR].first.children.length )
 
     msg[:OBR].first.children.each do |x|
-      assert_not_nil x
+      refute_nil x
     end
   end
 
   def test_add_children
     msg = Ruby::HL7::Message.new @base
-    assert_not_nil msg
-    assert_not_nil msg[:OBR]
+    refute_nil msg
+    refute_nil msg[:OBR]
     ob = Ruby::HL7::OBR.new
-    assert_not_nil ob
+    refute_nil ob
     
     msg << ob
-    assert_not_nil ob.children
-    assert_not_nil ob.segment_parent
+    refute_nil ob.children
+    refute_nil ob.segment_parent
     assert_equal(msg, ob.segment_parent)
     orig_cnt = msg.length
     
     (1..4).each do |x|
       m = Ruby::HL7::OBX.new
       m.observation_value = "taco"
-      assert_not_nil m
-      assert_not_nil /taco/.match( m.to_s )
+      refute_nil m
+      refute_nil /taco/.match( m.to_s )
       ob.children << m
       assert_equal(x, ob.children.length)
-      assert_not_nil m.segment_parent
+      refute_nil m.segment_parent
       assert_equal(ob, m.segment_parent)
     end
     
-    assert_not_equal( @base, msg.to_hl7 )
-    assert_not_equal( orig_cnt, msg.length )
+    refute_equal( @base, msg.to_hl7 )
+    refute_equal( orig_cnt, msg.length )
     text_ver = msg.to_hl7
-    assert_not_nil /taco/.match( text_ver )
+    refute_nil /taco/.match( text_ver )
   end
 end
 
