@@ -1,8 +1,9 @@
 # encoding: UTF-8
-require 'test/unit'
+require 'minitest/autorun'
+
 require 'ruby-hl7'
 
-class BasicParsing < Test::Unit::TestCase
+class BasicParsing < MiniTest::Unit::TestCase
   def setup
     @empty_txt = open( './test_data/empty.hl7' ).readlines.first
     @empty_segments_txt = open( './test_data/empty_segments.hl7' ).readlines.first
@@ -49,7 +50,7 @@ class BasicParsing < Test::Unit::TestCase
   end
 
   def test_not_string_or_enumerable
-    assert_raise( Ruby::HL7::ParseError ) do
+    assert_raises( Ruby::HL7::ParseError ) do
       msg = Ruby::HL7::Message.parse( :MSHthis_shouldnt_parse_at_all )
     end
   end
@@ -67,7 +68,7 @@ class BasicParsing < Test::Unit::TestCase
 
   def test_to_s_vs_to_hl7
     msg = Ruby::HL7::Message.new( @simple_msh_carriage_returns )
-    assert_not_equal( msg.to_s, msg.to_hl7 )
+    refute_equal( msg.to_s, msg.to_hl7 )
   end
 
   def test_segment_numeric_accessor
@@ -95,7 +96,7 @@ class BasicParsing < Test::Unit::TestCase
     msg[1] = inp
     assert_equal( inp, msg[1] )
 
-    assert_raise( Ruby::HL7::Exception ) do
+    assert_raises( Ruby::HL7::Exception ) do
       msg[2] = Class.new
     end
   end
@@ -103,9 +104,7 @@ class BasicParsing < Test::Unit::TestCase
   def test_segment_missing_accessor
     msg = Ruby::HL7::Message.new
     msg.parse @simple_msh_carriage_returns
-    assert_nothing_raised do
-      assert_equal( nil, msg[:does_not_exist] )
-    end
+    assert_equal( nil, msg[:does_not_exist] )
   end
 
   def test_segment_string_mutator
@@ -115,7 +114,7 @@ class BasicParsing < Test::Unit::TestCase
     msg["NTE"] = inp
     assert_equal( inp, msg["NTE"] )
 
-    assert_raise( Ruby::HL7::Exception ) do
+    assert_raises( Ruby::HL7::Exception ) do
       msg["NTE"] = Class.new
     end
   end
@@ -127,7 +126,7 @@ class BasicParsing < Test::Unit::TestCase
     msg[:NTE] = inp
     assert_equal( inp, msg[:NTE] )
 
-    assert_raise( Ruby::HL7::Exception ) do
+    assert_raises( Ruby::HL7::Exception ) do
       msg[:NTE] = Class.new
     end
   end
@@ -148,7 +147,7 @@ class BasicParsing < Test::Unit::TestCase
   def test_element_missing_accessor
     msg = Ruby::HL7::Message.new
     msg.parse @simple_msh_carriage_returns
-    assert_raise( Ruby::HL7::Exception, NoMethodError ) do
+    assert_raises( Ruby::HL7::Exception, NoMethodError ) do
       msg[:MSH].does_not_really_exist_here
     end
   end
@@ -156,7 +155,7 @@ class BasicParsing < Test::Unit::TestCase
   def test_element_missing_mutator
     msg = Ruby::HL7::Message.new
     msg.parse @simple_msh_carriage_returns
-    assert_raise( Ruby::HL7::Exception, NoMethodError ) do
+    assert_raises( Ruby::HL7::Exception, NoMethodError ) do
       msg[:MSH].does_not_really_exist_here = "TEST"
     end
   end
@@ -176,10 +175,8 @@ class BasicParsing < Test::Unit::TestCase
 
   def test_segment_append
     msg = Ruby::HL7::Message.new
-    assert_nothing_raised do
-      msg << Ruby::HL7::MSH.new
-      msg << Ruby::HL7::NTE.new
-    end
+    msg << Ruby::HL7::MSH.new
+    msg << Ruby::HL7::NTE.new
 
     assert_raises( Ruby::HL7::Exception ) do
       msg << Class.new
@@ -202,7 +199,7 @@ class BasicParsing < Test::Unit::TestCase
     initial = msg.to_s
     sorted = msg.sort
     final = sorted.to_s
-    assert_not_equal( initial, final )
+    refute_equal( initial, final )
   end
 
   def test_segment_auto_set_id
@@ -225,7 +222,7 @@ class BasicParsing < Test::Unit::TestCase
 
   def test_enumerable_parsing
     test_file = open( './test_data/carriage_returns.hl7' )
-    assert_not_nil( test_file )
+    refute_nil( test_file )
 
     msg = Ruby::HL7::Message.new( test_file )
     assert_equal( @simple_msh_carriage_returns, msg.to_hl7 )
@@ -233,7 +230,7 @@ class BasicParsing < Test::Unit::TestCase
 
   def test_segment_to_info
     msg = Ruby::HL7::Message.new( @simple_msh_carriage_returns )
-    assert_not_nil( msg[1].to_info )
+    refute_nil( msg[1].to_info )
   end
 
   def test_segment_use_raw_array
@@ -251,37 +248,31 @@ class BasicParsing < Test::Unit::TestCase
   def test_parse_mllp
     raw = "\x0b%s\x1c\r" % @simple_msh_carriage_returns
     msg = Ruby::HL7::Message.parse( raw )
-    assert_not_nil( msg )
+    refute_nil( msg )
     assert_equal( @simple_msh_carriage_returns, msg.to_hl7 )
     assert_equal( raw, msg.to_mllp )
   end
 
   def test_mllp_output_parse
     msg = Ruby::HL7::Message.parse( @simple_msh_carriage_returns )
-    assert_not_nil( msg )
-    assert_nothing_raised do
-      post_mllp = Ruby::HL7::Message.parse( msg.to_mllp )
-      assert_not_nil( post_mllp )
-      assert_equal( msg.to_hl7, post_mllp.to_hl7 )
-    end
+    refute_nil( msg )
+    post_mllp = Ruby::HL7::Message.parse( msg.to_mllp )
+    refute_nil( post_mllp )
+    assert_equal( msg.to_hl7, post_mllp.to_hl7 )
   end
 
   def test_child_segment_accessor
     obr = Ruby::HL7::OBR.new
-    assert_nothing_raised do
-      assert_not_nil( obr.children )
-      assert_equal( 0, obr.children.length )
-    end
+    refute_nil( obr.children )
+    assert_equal( 0, obr.children.length )
   end
 
   def test_child_segment_addition
     obr = Ruby::HL7::OBR.new
-    assert_nothing_raised do
-      assert_equal( 0, obr.children.length )
-      (1..5).each do |x|
-        obr.children << Ruby::HL7::OBX.new
-        assert_equal( x, obr.children.length )
-      end
+    assert_equal( 0, obr.children.length )
+    (1..5).each do |x|
+      obr.children << Ruby::HL7::OBX.new
+      assert_equal( x, obr.children.length )
     end
   end
 
@@ -295,8 +286,8 @@ class BasicParsing < Test::Unit::TestCase
   def test_grouped_sequenced_segments
     #multible obr's with multiple obx's
     msg = Ruby::HL7::Message.parse( @simple_msh_carriage_returns )
-    assert_not_nil( msg )
-    assert_not_nil( msg[:OBX] )
+    refute_nil( msg )
+    refute_nil( msg[:OBX] )
     orig_output = msg.to_hl7
     orig_obx_cnt = msg[:OBX].length
     (1..10).each do |obr_id|
@@ -308,15 +299,15 @@ class BasicParsing < Test::Unit::TestCase
       end
     end
 
-    assert_not_nil( msg[:OBR] )
+    refute_nil( msg[:OBR] )
     assert_equal( 11, msg[:OBR].length )
-    assert_not_nil( msg[:OBX] )
+    refute_nil( msg[:OBX] )
     assert_equal( 102, msg[:OBX].length ) 
     assert_equal( "2", msg[:OBR][4].children[1].set_id ) # confirm the id's
     assert_equal( "2", msg[:OBR][5].children[1].set_id ) # confirm the id's
 
     final_output = msg.to_hl7
-    assert_not_equal( orig_output, final_output )
+    refute_equal( orig_output, final_output )
   end
 
   def test_index_accessor
@@ -347,9 +338,7 @@ class BasicParsing < Test::Unit::TestCase
     assert_raises( Ruby::HL7::InvalidDataError ) do
       pid.admin_sex = "TEST"
     end
-    assert_nothing_raised do
-      pid.admin_sex = "F"
-    end
+    pid.admin_sex = "F"
   end
 
   def test_empty_segment
