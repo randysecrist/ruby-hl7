@@ -103,7 +103,7 @@ class BasicParsing < MiniTest::Unit::TestCase
   def test_segment_missing_accessor
     msg = Ruby::HL7::Message.new
     msg.parse @simple_msh_carriage_returns
-    assert_equal( nil, msg[:does_not_exist] )
+    assert_nil msg[:does_not_exist]
   end
 
   def test_segment_string_mutator
@@ -315,9 +315,9 @@ class BasicParsing < MiniTest::Unit::TestCase
     assert_equal( 1, msg.index( :PID ) )
     assert_equal( 2, msg.index( "PV1" ) )
     assert_equal( 2, msg.index( :PV1 ) )
-    assert_equal( nil, msg.index( "TACOBELL" ) )
-    assert_equal( nil, msg.index( nil ) )
-    assert_equal( nil, msg.index( 1 ) )
+    assert_nil msg.index( "TACOBELL" )
+    assert_nil msg.index( nil )
+    assert_nil msg.index( 1 )
   end
 
   def test_end_line_parse

@@ -18,5 +18,6 @@ Gem::Specification.new do |s|
   # Testing
   s.add_development_dependency "rake"
   s.add_development_dependency "rantly"
+  s.add_development_dependency "minitest"
 
 end
