@@ -3,7 +3,7 @@ $: << '../lib'
 require 'minitest/autorun'
 require 'ruby-hl7'
 
-class ChildSegment < MiniTest::Unit::TestCase
+class ChildSegment < MiniTest::Test
   def setup
     @base = open( './test_data/obxobr.hl7' ).readlines
   end

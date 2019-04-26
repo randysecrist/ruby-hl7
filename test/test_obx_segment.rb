@@ -3,7 +3,7 @@ $: << '../lib'
 require 'minitest/autorun'
 require 'ruby-hl7'
 
-class ObxSegment < MiniTest::Unit::TestCase
+class ObxSegment < MiniTest::Test
   def setup
     @base = "OBX||TX|FIND^FINDINGS^L|1|This is a test on 05/02/94."
   end

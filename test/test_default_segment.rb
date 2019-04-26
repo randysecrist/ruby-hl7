@@ -3,7 +3,7 @@ $: << '../lib'
 require 'minitest/autorun'
 require 'ruby-hl7'
 
-class MsaSegment < MiniTest::Unit::TestCase
+class MsaSegment < MiniTest::Test
   def setup
     @base_msa = "MSA|AR|ZZ9380 ERR"
   end

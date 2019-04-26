@@ -2,7 +2,7 @@
 require 'minitest/autorun'
 require 'ruby-hl7'
 
-class BasicParsing < MiniTest::Unit::TestCase
+class BasicParsing < MiniTest::Test
   def setup
     @empty_txt = open( './test_data/empty.hl7' ).readlines.first
     @empty_segments_txt = open( './test_data/empty_segments.hl7' ).readlines.first

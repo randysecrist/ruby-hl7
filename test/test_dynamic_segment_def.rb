@@ -3,7 +3,7 @@ $: << '../lib'
 require 'minitest/autorun'
 require 'ruby-hl7'
 
-class DynamicSegmentDefinition < MiniTest::Unit::TestCase
+class DynamicSegmentDefinition < MiniTest::Test
   def setup
   end
 

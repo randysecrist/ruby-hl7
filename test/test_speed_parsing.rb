@@ -4,7 +4,7 @@ require 'time'
 require 'minitest/autorun'
 require 'ruby-hl7'
 
-class SpeedParsing < MiniTest::Unit::TestCase
+class SpeedParsing < MiniTest::Test
   def setup
     @msg = open( "./test_data/lotsunknowns.hl7" ).readlines
   end

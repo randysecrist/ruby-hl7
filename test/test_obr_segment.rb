@@ -3,7 +3,7 @@ $: << '../lib'
 require 'minitest/autorun'
 require 'ruby-hl7'
 
-class ObrSegment < MiniTest::Unit::TestCase
+class ObrSegment < MiniTest::Test
   def setup
     @base = "OBR|2|^USSSA|0000000567^USSSA|37956^CT ABDOMEN^LN|||199405021550|||||||||||||0000763|||||P||||||R/O TUMOR|202300&BAKER&MARK&E|||01&LOCHLEAR&JUDY"
   end

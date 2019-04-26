@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'ruby-hl7'
 
-class MshSegment < MiniTest::Unit::TestCase
+class MshSegment < MiniTest::Test
   def setup
     @base_msh = 'MSH|^~\&|STAR|1154302487|TESTAPP|TESTHOSP|201105010200||ADT^A01|56364182|D|2.3|56364182||AL'
   end
